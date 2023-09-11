@@ -8,9 +8,6 @@ from django.conf import settings
 from django.http import FileResponse, HttpResponse 
 
 def index(request):
-    #load data on the template
-    #data=Student.objects.all()
-    #context={"data":data}
     return render(request,"index.html")
 
 
