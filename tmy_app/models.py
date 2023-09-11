@@ -27,7 +27,7 @@ class TMYParameter(models.Model):
     relative_humidity = models.BooleanField()
     precipitable_water = models.BooleanField()
     wind_direction = models.BooleanField()
-    granularity_minutes = models.IntegerField()
+    granularity = models.IntegerField()
 
     def __str__(self):
         return self.project_name

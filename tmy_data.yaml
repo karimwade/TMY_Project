@@ -1,0 +1,32 @@
+analysis:
+  probability:
+    p10: 'True'
+    p50: 'True'
+    p75: 'True'
+    p90: 'True'
+    p99: 'False'
+  request_id: m
+granularity: 6 Minutes
+location:
+  altitude: '0'
+  latitude: '36.01111'
+  longitude: '140.247'
+meteo_data:
+  ambient_temperature: 'False'
+  pm_10: 'False'
+  pm_2_5: 'True'
+  precipitable_water: 'False'
+  relative_humidity: 'True'
+  wind_direction: 'True'
+project_name: ami
+pv_system:
+  pv:
+    azimuth: '180'
+    description: test test
+    tilt: '20'
+  technology: pv
+  tracker:
+    axis_azimuth: '180'
+    description: single test
+    gcr: '0.3'
+    max_angle: '45'
