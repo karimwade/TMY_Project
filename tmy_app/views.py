@@ -121,7 +121,7 @@ def create_tmy_parameter(request):
         # Créez un fichier YAML
         with open('tmy_data.yaml', 'w') as yaml_file:
             yaml_file.write(yaml_content)
-        #return redirect("success")
+        return redirect("success")
 
     return render(request,'index.html')
 
@@ -135,13 +135,12 @@ def success(request):
     if os.path.exists(file_path):
         # Ouvrez le fichier en mode binaire
         with open(file_path, 'rb') as yaml_file:
-            response = FileResponse(yaml_file)
+            response = HttpResponse(yaml_file.read(), content_type='application/x-yaml')
             response['Content-Disposition'] = 'attachment; filename="tmy_data.yaml"'
-            #return redirect(request,"success.html")
-            return HttpResponse(response)
+            return response
         
     else:
         # Gérez le cas où le fichier n'existe pas
         return HttpResponse("Le fichier n'existe pas", status=404)
 
-    return redirect(request,"success.html")
+    

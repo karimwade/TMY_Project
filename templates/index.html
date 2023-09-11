@@ -10,11 +10,12 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
+        <div class="container-fluid" >
             <!-- <img src="/static/image001.png" alt=""> -->
           <a class="navbar-brand" href="#">Lucisun TMY Project</a>
+          <a href="{% url 'success' %}">Télécharger le fichier YAML</a>
         </div>
-        <!-- <a href="{% url 'success' %}">Télécharger le fichier YAML</a> -->
+        
 
     </nav>
     {% for message in messages %}
@@ -24,11 +25,11 @@
           </div>
     {% endfor %}
 <div class="container">
-    <div class="row col-4"></div>
+    <div class="row-cols-4"></div>
     <div class="row-cols-auto">
         <hr>
         <h2 class="text-black bg-light text-center p-3">Saisir les paramètres de la configuration TMY</h2>
-
+        <a href="{% url 'success' %}">Télécharger le fichier YAML</a> 
         <form action="/home" method="post">{% csrf_token %}
             <fieldset>
                 <legend><center>Location</center></legend>
@@ -89,33 +90,33 @@
             <fieldset>
                 <legend><center>Probability levels for analysis</center> </legend>
                 <div class="form-control"  >
-                    <label for="p50">P50</label>
-                    <label for="">True<input type="radio" id="p50" value="True" name="p50"></label>
-                    <label for="">False<input type="radio" id="p50" value="False" name="p50"></label>
+                    <label for="p50">P50 :</label>
+                    <label for="">True <input type="radio" id="p50" value="True" name="p50" required></label>
+                    <label for="">False <input type="radio" id="p50" value="False" name="p50" required></label>
     
                     <hr height="10">
     
-                    <label for="p75">P75</label>
-                    <label for="">True<input type="radio" id="p75" value="True" name="p75"></label>
-                    <label for="">False<input type="radio" id="p75" value="False" name="p75"></label>
+                    <label for="p75">P75 :</label>
+                    <label for="">True <input type="radio" id="p75" value="True" name="p75" required></label>
+                    <label for="">False <input type="radio" id="p75" value="False" name="p75" required></label>
     
                     <hr height="10">
     
-                    <label for="p90">P90</label>
-                    <label>True<input type="radio" id="p90" value="True" name="p90"></label>
-                    <label>False<input type="radio" id="p90" value="False" name="p90"></label>
+                    <label for="p90">P90 :</label>
+                    <label>True <input type="radio" id="p90" value="True" name="p90" required></label>
+                    <label>False <input type="radio" id="p90" value="False" name="p90" required></label>
     
                     <hr height="10">
     
-                    <label for="p10">P10</label>
-                    <label for="">True<input type="radio" id="p10" value="True" name="p10"></label>
-                    <label for="">False<input type="radio" id="p10" value="False" name="p10"></label>
+                    <label for="p10">P10 :</label>
+                    <label for="">True <input type="radio" id="p10" value="True" name="p10" required></label>
+                    <label for="">False <input type="radio" id="p10" value="False" name="p10" required></label>
     
                     <hr height="10">
     
-                    <label for="p99">P99</label>
-                    <label for="">True<input type="radio" id="p99" value="True" name="p99"></label>
-                    <label for="">False<input type="radio" id="p99" value="False" name="p99"></label>
+                    <label for="p99">P99 :</label>
+                    <label for="">True <input type="radio" id="p99" value="True" name="p99" required></label>
+                    <label for="">False <input type="radio" id="p99" value="False" name="p99" required></label>
     
                     <hr height="10">
 
@@ -126,41 +127,41 @@
             <fieldset >
                 <legend><center>Meteorological data to be included in the analysis</center></legend>
                 <div class="form-control">
-                    <label for="ambient_temperature">Ambient Temperature</label>
-                    <label for="">True<input type="radio" id="ambient_temperature" value="True" name="ambient_temperature"></label>
-                    <label for="">False<input type="radio" id="ambient_temperature" value="False" name="ambient_temperature"></label>
+                    <label for="ambient_temperature">Ambient Temperature :</label>
+                    <label for="">True <input type="radio" id="ambient_temperature" value="True" name="ambient_temperature" required></label>
+                    <label for="">False <input type="radio" id="ambient_temperature" value="False" name="ambient_temperature" required></label>
                 
                     <hr height="10">
     
-                    <label for="pm_2_5">PM_2_5</label>
-                    <label for="">True<input type="radio" id="pm_2_5" value="True" name="pm_2_5"></label>
-                    <label for="">False<input type="radio" id="pm_2_5" value="False" name="pm_2_5"></label>
+                    <label for="pm_2_5">PM_2_5 :</label>
+                    <label for="">True <input type="radio" id="pm_2_5" value="True" name="pm_2_5" required></label>
+                    <label for="">False <input type="radio" id="pm_2_5" value="False" name="pm_2_5" required></label>
     
                     
     
                     <hr height="10">
     
-                    <label for="pm_10">P_M_10</label>
-                    <label for="">True<input type="radio" id="pm_10" value="True" name="pm_10"></label>
-                    <label for="">False<input type="radio" id="pm_10" value="False" name="pm_10"></label>
+                    <label for="pm_10">P_M_10 :</label>
+                    <label for="">True <input type="radio" id="pm_10" value="True" name="pm_10" required></label>
+                    <label for="">False <input type="radio" id="pm_10" value="False" name="pm_10" required></label>
     
                     <hr height="10">
     
-                    <label for="relative_humidity">Relative Humidity</label>
-                    <label for="">True<input type="radio" id="relative_humidity" value="True" name="relative_humidity"></label>
-                    <label for="">False<input type="radio" id="relative_humidity" value="False" name="relative_humidity"></label>
+                    <label for="relative_humidity">Relative Humidity :</label>
+                    <label for="">True <input type="radio" id="relative_humidity" value="True" name="relative_humidity" required></label>
+                    <label for="">False <input type="radio" id="relative_humidity" value="False" name="relative_humidity" required></label>
               
                     <hr height="10">
     
-                    <label for="precipitable_water">Relative Humidity</label>
-                    <label for="">True<input type="radio" id="precipitable_water" value="True" name="precipitable_water"></label>
-                    <label for="">False<input type="radio" id="precipitable_water" value="False" name="precipitable_water"></label>
+                    <label for="precipitable_water">Relative Humidity :</label>
+                    <label for="">True <input type="radio" id="precipitable_water" value="True" name="precipitable_water" required></label>
+                    <label for="">False <input type="radio" id="precipitable_water" value="False" name="precipitable_water" required></label>
     
                     <hr height="10">
     
-                    <label for="wind_direction">Wind Direction</label>
-                    <label for="">True<input type="radio" id="wind_direction" value="True" name="wind_direction"></label>
-                    <label for="">False<input type="radio" id="wind_direction" value="False" name="wind_direction"></label>
+                    <label for="wind_direction">Wind Direction :</label>
+                    <label for="">True <input type="radio" id="wind_direction" value="True" name="wind_direction" required></label>
+                    <label for="">False <input type="radio" id="wind_direction" value="False" name="wind_direction" required></label>
                
                 </div>
                
@@ -188,7 +189,7 @@
             
         </form>
     </div>
-    <div>
+    <div class="row-cols-4">
         
     </div>
 </div>
