@@ -7,10 +7,12 @@ import os
 from django.conf import settings
 from django.http import FileResponse, HttpResponse 
 
-def index(request):
-    return render(request,"index.html")
+#page d'acceuil
+def home_page(request):
+    return render(request,"home_page.html")
 
 
+#fonction traitement formulaire et creation fichier yaml
 def create_tmy_parameter(request):
     if request.method == 'POST':
         project_name = request.POST["project_name"]

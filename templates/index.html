@@ -1,5 +1,5 @@
-{% block content %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,184 +7,252 @@
     <title>tmy_project</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
+     <!-- Mapbox -->
+	  <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+	  <link
+		href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css"
+		rel="stylesheet"/>
+	  
+		<!-- Leaflet -->
+	  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+	  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+      <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+      
+	<style>
+
+		#map {
+			height: 300px;
+			width: 1200px;
+			border-radius: 5px;
+		}
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
         <div class="container-fluid" >
-          <a class="navbar-brand" href="#">Lucisun TMY Project</a>
-          <a href="{% url 'success' %}">Télécharger le fichier YAML</a>
+            <a href="{% url 'home' %}"><img src="{% static 'images/image001.png' %}"></a>
+            <ul class="menu">
+				<li><a href="{% url 'index' %}">Formulaire</a></li>
+				<li><a href="{% url 'success' %}">Download YAML file</a></li>
+			</ul>
+          
         </div>
         
 
     </nav>
-    {% for message in messages %}
-          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            <strong>{{message}}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-    {% endfor %}
 <div class="container">
-    <div class="row-cols-4"></div>
+    <h2 class="text-black bg-light text-center p-3">Saisir les paramètres de la configuration TMY</h2>
+    <div class="row-cols-4">
+        <!-- Endroit ou on veut afficher notre carte -->
+        <div id="map">
+												
+        </div>
+    </div>
     <div class="row-cols-auto">
         <hr>
-        <h2 class="text-black bg-light text-center p-3">Saisir les paramètres de la configuration TMY</h2>
-        <a href="{% url 'success' %}">Télécharger le fichier YAML</a> 
+     
         <form action="/home" method="post">{% csrf_token %}
             <fieldset>
-                <legend><center>Location</center></legend>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Enter The Project Name" name="project_name" required>
+                <legend><center><u>Location and PV System Configuration</u></center></legend>
+                &NonBreakingSpace;
+                <div class="container">
+                    <div class="form-group div-input" >
+                        <input type="text" class="form-control" placeholder="Enter The Project Name" name="project_name" required>
+                    </div>
+                    
+                    <div class="form-group div-input">
+                        <input type="text" class="form-control" placeholder="Enter The latitude" name="latitude" id="latitude" readonly required>
+                    </div>
+                    <div class="form-group div-input">
+                        <input type="text" class="form-control" placeholder="Enter The longitude" name="longitude" id="longitude" readonly required>
+                    </div>
                 </div>
-                <hr>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Enter The latitude" name="latitude" required>
+                <div class="container">
+                    <div class="form-group div-input">
+                        <input type="text" class="form-control" placeholder="Enter The Altitude" name="altitude" required>
+                    </div>
+                    <div class="form-group div-input">
+                        <select class="form-control" id="technology" name="technology">
+                            <option>Choisissez une Technology</option>
+                            <option value="pv">pv</option>
+                            <option value="tracker">tracker</option>
+                        </select>
+                        
+                    </div>
+                    <div class="form-group div-input">
+                        <input type="text" class="form-control" placeholder="Enter The PV Description" name="pv_description" required>
+                    </div>
+
                 </div>
-                <hr>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Enter The longitude" name="longitude" required>
+                <div class="container">
+                    <div class="form-group div-input">
+                        <input type="text" class="form-control" placeholder="Enter The PV Tilt" name="pv_tilt" required>
+                    </div>
+                    
+                    <div class="form-group  div-input">
+                        <input type="text" class="form-control" placeholder="Enter The PV Azimuth" name="pv_azimuth" required>
+                    </div>
+                    
+                    <div class="form-group div-input">
+                        <input type="text" class="form-control" placeholder="Enter The Tracker Description" name="tracker_description" required>
+                    </div>
+    
                 </div>
-                <hr>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Enter The Altitude" name="altitude" required>
+                <div class="container">
+                    <div class="form-group div-input">
+                        <input type="text" class="form-control" placeholder="Enter The Tracker GCR" name="tracker_gcr" required>
+                    </div>
+                    
+                    <div class="form-group div-input">
+                        <input type="text" class="form-control" placeholder="Enter The Tracker Axis Azimuth" name="tracker_axis_azimuth" required>
+                    </div>
+                    
+                    <div class="form-group div-input">
+                        <input type="text" class="form-control" placeholder="Enter The Tracker Max Angle" name="tracker_max_angle" required>
+                    </div>
+    
                 </div>
-                <hr>
+                
             </fieldset>
             
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter The Tecnology" name="technology" required>
-            </div>
-            <hr>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter The PV Description" name="pv_description" required>
-            </div>
-            <hr>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter The PV Tilt" name="pv_tilt" required>
-            </div>
-            <hr>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter The PV Azimuth" name="pv_azimuth" required>
-            </div>
-            <hr>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter The Tracker Description" name="tracker_description" required>
-            </div>
-            <hr>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter The Tracker GCR" name="tracker_gcr" required>
-            </div>
-            <hr>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter The Tracker Axis Azimuth" name="tracker_axis_azimuth" required>
-            </div>
-            <hr>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter The Tracker Max Angle" name="tracker_max_angle" required>
-            </div>
-            <hr>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter The Request ID" name="request_id" required>
-            </div>
+
+           
+            
             <hr>
             <fieldset>
-                <legend><center>Probability levels for analysis</center> </legend>
-                <div class="form-control"  >
+
+            <legend><center><u> Analysis Parameters & Probability levels for analysis</u></center> </legend>
+            &NonBreakingSpace;
+            <div class="container">
+                <div class="form-group div-input">
+                    <input type="text" class="form-control" placeholder="Enter The Request ID" name="request_id" required>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                
+                <div class="form-group div-input">
                     <label for="p50">P50 :</label>
                     <label for="">True <input type="radio" id="p50" value="True" name="p50" required></label>
                     <label for="">False <input type="radio" id="p50" value="False" name="p50" required></label>
     
-                    <hr height="10">
-    
+                </div>
+                <div class="form-group div-input">
                     <label for="p75">P75 :</label>
                     <label for="">True <input type="radio" id="p75" value="True" name="p75" required></label>
                     <label for="">False <input type="radio" id="p75" value="False" name="p75" required></label>
-    
-                    <hr height="10">
-    
+
+                </div>
+
+                <div class="form-group div-input">
                     <label for="p90">P90 :</label>
                     <label>True <input type="radio" id="p90" value="True" name="p90" required></label>
                     <label>False <input type="radio" id="p90" value="False" name="p90" required></label>
     
-                    <hr height="10">
-    
+                </div>
+                
+                <div class="form-group div-input">
                     <label for="p10">P10 :</label>
                     <label for="">True <input type="radio" id="p10" value="True" name="p10" required></label>
                     <label for="">False <input type="radio" id="p10" value="False" name="p10" required></label>
-    
-                    <hr height="10">
-    
+                </div>
+
+                <div class="form-group div-input">
                     <label for="p99">P99 :</label>
                     <label for="">True <input type="radio" id="p99" value="True" name="p99" required></label>
                     <label for="">False <input type="radio" id="p99" value="False" name="p99" required></label>
-    
-                    <hr height="10">
+                </div>
 
-                </div>               
-    
-            </fieldset>
+            </div>
+            <div class="container">
+                
+                
+                
+            </div>
+
+        </fieldset>
+           
             <hr>
             <fieldset >
-                <legend><center>Meteorological data to be included in the analysis</center></legend>
-                <div class="form-control">
-                    <label for="ambient_temperature">Ambient Temperature :</label>
-                    <label for="">True <input type="radio" id="ambient_temperature" value="True" name="ambient_temperature" required></label>
-                    <label for="">False <input type="radio" id="ambient_temperature" value="False" name="ambient_temperature" required></label>
-                
-                    <hr height="10">
-    
-                    <label for="pm_2_5">PM_2_5 :</label>
-                    <label for="">True <input type="radio" id="pm_2_5" value="True" name="pm_2_5" required></label>
-                    <label for="">False <input type="radio" id="pm_2_5" value="False" name="pm_2_5" required></label>
-    
+                <legend><center><u>Meteorological data to be included in the analysis</u></center></legend>
+                &NonBreakingSpace;
+                <div class="container">
+                    <div class="form-group div-input">
+                        <label for="ambient_temperature">Ambient Temperature :</label>
+                        <label for="">True <input type="radio" id="ambient_temperature" value="True" name="ambient_temperature" required></label>
+                        <label for="">False <input type="radio" id="ambient_temperature" value="False" name="ambient_temperature" required></label>
                     
-    
-                    <hr height="10">
-    
+                    </div>
+                    <div class="form-group div-input">
+                        <label for="pm_2_5">PM_2_5 :</label>
+                        <label for="">True <input type="radio" id="pm_2_5" value="True" name="pm_2_5" required></label>
+                        <label for="">False <input type="radio" id="pm_2_5" value="False" name="pm_2_5" required></label>
+        
+                    </div>
+
+                    <div class="form-group div-input">
+                        
                     <label for="pm_10">P_M_10 :</label>
                     <label for="">True <input type="radio" id="pm_10" value="True" name="pm_10" required></label>
                     <label for="">False <input type="radio" id="pm_10" value="False" name="pm_10" required></label>
     
-                    <hr height="10">
-    
-                    <label for="relative_humidity">Relative Humidity :</label>
-                    <label for="">True <input type="radio" id="relative_humidity" value="True" name="relative_humidity" required></label>
-                    <label for="">False <input type="radio" id="relative_humidity" value="False" name="relative_humidity" required></label>
-              
-                    <hr height="10">
-    
-                    <label for="precipitable_water">Relative Humidity :</label>
-                    <label for="">True <input type="radio" id="precipitable_water" value="True" name="precipitable_water" required></label>
-                    <label for="">False <input type="radio" id="precipitable_water" value="False" name="precipitable_water" required></label>
-    
-                    <hr height="10">
-    
-                    <label for="wind_direction">Wind Direction :</label>
-                    <label for="">True <input type="radio" id="wind_direction" value="True" name="wind_direction" required></label>
-                    <label for="">False <input type="radio" id="wind_direction" value="False" name="wind_direction" required></label>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="form-group div-input">
+                        <label for="relative_humidity">Relative Humidity :</label>
+                        <label for="">True <input type="radio" id="relative_humidity" value="True" name="relative_humidity" required></label>
+                        <label for="">False <input type="radio" id="relative_humidity" value="False" name="relative_humidity" required></label>            
+                    </div>
+
+                    <div class="form-group div-input">
+                        <label for="precipitable_water">Relative Humidity :</label>
+                        <label for="">True <input type="radio" id="precipitable_water" value="True" name="precipitable_water" required></label>
+                        <label for="">False <input type="radio" id="precipitable_water" value="False" name="precipitable_water" required></label>
+        
+                    </div>
+
+                    <div class="form-group div-input">
+                        <label for="wind_direction">Wind Direction :</label>
+                        <label for="">True <input type="radio" id="wind_direction" value="True" name="wind_direction" required></label>
+                        <label for="">False <input type="radio" id="wind_direction" value="False" name="wind_direction" required></label>
+                   
+                    </div>
+                </div>
+                &NonBreakingSpace;
+                <div class="container">
+                    <div class="form-group div-input">
+                        <input type="text" class="form-control" placeholder="Enter The Granularity" name="granularity" required>
+                    </div>
+                
+                </div>
                
+                <div class="container">
+                    <div class="form-group div-input">
+                        <label for="granularity_time"></label>
+                        <select name="granularity_time" id="granularity_time" class="form-control" required>
+                            <option selected>Select time Granularity</option>
+                            <option value="Minutes">Minutes</option>
+                            <option value="Hours">Hours</option>
+                        </select>
+                    </div>
                 </div>
                
             </fieldset>
-             <hr>
-         
-            <hr>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter The Granularity" name="granularity" required>
+
+            <center>
+            <div class="container">
+                <div class="form-group div-input">
+                    <button class="btn btn-success" type="submit">Save and Download</button>
+                    <button class="btn btn-danger" type="reset">Erase the Entry</button>
+                    
+                </div>
+                
             </div>
-            <hr>
-            <div class="form-group">
-                <label for="granularity_time"></label>
-                <select name="granularity_time" id="granularity_time" class="form-control" required>
-                    <option selected>Select time Granularity</option>
-                    <option value="Minutes">Minutes</option>
-                    <option value="Hours">Hours</option>
-                </select>
-            </div>
-            <hr>
-            <div class="d-grid gap-2">
-                <button class="btn btn-success" type="submit">Save</button>
-                <button class="btn btn-danger" type="reset">Erase</button>
-            </div>
+             </center>
+           
             
         </form>
     </div>
@@ -194,5 +262,38 @@
 </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
+<!-- Script Load Map -->
+<script>
+   
+	mapboxgl.accessToken = 'pk.eyJ1Ijoia2FyaW0yODAxIiwiYSI6ImNsbWpyb3FqbjA1YjMya28zenFxMWo1NXoifQ.KIfI7Jc2Zhtoqet3Z2yZsg';
+	var map = L.map('map').setView([0, 0], 8); // Initialisation de la carte Leaflet
+  
+	// Couche de tuiles Mapbox (utilisez votre propre style Mapbox)
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+	  maxZoom: 18,
+	  id: 'mapbox/streets-v11', // Remplacez par votre propre style Mapbox
+	  accessToken: 'pk.eyJ1Ijoia2FyaW0yODAxIiwiYSI6ImNsbWpyb3FqbjA1YjMya28zenFxMWo1NXoifQ.KIfI7Jc2Zhtoqet3Z2yZsg', // Remplacez par votre token d'accès API Mapbox
+	}).addTo(map);
+  
+	// Initialisation des couches de marqueurs et de cercles
+	var markerLayer = L.marker([0, 0]).addTo(map); // Couche de marqueurs
+	var circleLayer = L.circle([0, 0], { radius: 10000 }).addTo(map); // Couche de cercles (rayon en mètres)
+  
+	map.on('click', function(e) {
+	  // Récupérez les coordonnées latitude et longitude de l'événement de clic
+	  var latitude = e.latlng.lat;
+	  var longitude = e.latlng.lng;
+  
+	  // Mise à jour de la couche de marqueurs
+	  markerLayer.setLatLng([latitude, longitude]);
+  
+	  // Mise à jour de la couche de cercles
+	  circleLayer.setLatLng([latitude, longitude]);
+  
+	  console.log('Latitude : ' + latitude + ', Longitude : ' + longitude); // pour tester dans la console
+      //Recuperation des coordonnees (latitude et longitude)
+	  document.getElementById('latitude').value = latitude;
+      document.getElementById('longitude').value = longitude;
+	});
+  </script>
 </html>
-{% endblock content %}

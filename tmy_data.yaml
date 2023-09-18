@@ -2,23 +2,23 @@ analysis:
   probability:
     p10: 'True'
     p50: 'True'
-    p75: 'False'
+    p75: 'True'
     p90: 'True'
     p99: 'True'
   request_id: m
 granularity: 5 Minutes
 location:
   altitude: '0'
-  latitude: '36.01111'
-  longitude: '140.247'
+  latitude: '11.334639102837388'
+  longitude: '-13.623046875'
 meteo_data:
   ambient_temperature: 'True'
   pm_10: 'True'
   pm_2_5: 'True'
-  precipitable_water: 'False'
-  relative_humidity: 'False'
+  precipitable_water: 'True'
+  relative_humidity: 'True'
   wind_direction: 'True'
-project_name: mmm
+project_name: ami
 pv_system:
   pv:
     azimuth: '180'
